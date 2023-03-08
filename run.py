@@ -6,14 +6,17 @@ from tensorflow.keras.preprocessing import image
 import cv2
 import numpy as np
 
+<<<<<<< HEAD
 face_classifier = cv2.CascadeClassifier(r'D:\Projects\Facial_Detection_Project\haarcascade_frontalface_default.xml')
 classifier =load_model(r'D:\Projects\Facial_Detection_Project\new_model1.h5')
+=======
+face_classifier = cv2.CascadeClassifier(r'D:\Python\Projects\Facial_Detection_Project\haarcascade_frontalface_default.xml')
+classifier =load_model(r'D:\Python\Projects\Facial_Detection_Project\my_model.h5')
+>>>>>>> 0d07371d51a2dea4c638497156680a2184c6033b
 
 emotion_labels = ['Angry','Disgust','Fear','Happy','Neutral', 'Sad', 'Surprise']
 
 cap = cv2.VideoCapture(0)
-
-
 
 while True:
     _, frame = cap.read()
@@ -25,8 +28,6 @@ while True:
         cv2.rectangle(frame,(x,y),(x+w,y+h),(0,255,255),2)
         roi_gray = gray[y:y+h,x:x+w]
         roi_gray = cv2.resize(roi_gray,(48,48),interpolation=cv2.INTER_AREA)
-
-
 
         if np.sum([roi_gray])!=0:
             roi = roi_gray.astype('float')/255.0

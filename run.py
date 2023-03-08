@@ -5,17 +5,25 @@ from tensorflow.keras.preprocessing.image import img_to_array
 from tensorflow.keras.preprocessing import image
 import cv2
 import numpy as np
+from keras.models import model_from_json
 
-<<<<<<< HEAD
-face_classifier = cv2.CascadeClassifier(r'D:\Projects\Facial_Detection_Project\haarcascade_frontalface_default.xml')
-classifier =load_model(r'D:\Projects\Facial_Detection_Project\new_model1.h5')
-=======
-face_classifier = cv2.CascadeClassifier(r'D:\Python\Projects\Facial_Detection_Project\haarcascade_frontalface_default.xml')
-classifier =load_model(r'D:\Python\Projects\Facial_Detection_Project\my_model.h5')
->>>>>>> 0d07371d51a2dea4c638497156680a2184c6033b
+# Loading Cascade Classifier
+face_classifier = cv2.CascadeClassifier("D:\Projects\Facial_Detection_Project\haarcascade_frontalface_default.xml")
 
+#Loading Json Model:
+json_file = open("D:\Projects\Facial_Detection_Project\model.json", 'r')
+loaded_model_json = json_file.read()
+json_file.close()
+classifier =model_from_json(loaded_model_json)
+classifier.load_weights("D:\Projects\Facial_Detection_Project\new_model.h5")
+
+# Printing Status:
+print("Loading of Model Successful")
+
+#Labeling Classes:
 emotion_labels = ['Angry','Disgust','Fear','Happy','Neutral', 'Sad', 'Surprise']
 
+#Opening Video Capture
 cap = cv2.VideoCapture(0)
 
 while True:

@@ -1,54 +1,60 @@
-from keras.models import load_model
-from time import sleep
-from tensorflow import keras
-from tensorflow.keras.preprocessing.image import img_to_array
-from tensorflow.keras.preprocessing import image
 import cv2
 import numpy as np
 from keras.models import model_from_json
 
-# Loading Cascade Classifier
-face_classifier = cv2.CascadeClassifier("D:\Projects\Facial_Detection_Project\haarcascade_frontalface_default.xml")
+emotion_classes = {
+    0: "Angry", 
+    1: "Disgust", 
+    2: "Fear", 
+    3: "Happy", 
+    4: "Neutral", 
+    5: "Sad", 
+    6: "Surprise"}
 
-#Loading Json Model:
-json_file = open("D:\Projects\Facial_Detection_Project\model.json", 'r')
+#Loading Trained Model:
+json_file = open("model\model.json", 'r')
 loaded_model_json = json_file.read()
 json_file.close()
-classifier =model_from_json(loaded_model_json)
-classifier.load_weights("D:\Projects\Facial_Detection_Project\new_model.h5")
+model = model_from_json(loaded_model_json)
 
-# Printing Status:
-print("Loading of Model Successful")
+#Loading Weights:
+model.load_weights("model\model.h5")
 
-#Labeling Classes:
-emotion_labels = ['Angry','Disgust','Fear','Happy','Neutral', 'Sad', 'Surprise']
+print("Model Loaded Successfully")
 
-#Opening Video Capture
+#Starting the Webcam feed:
 cap = cv2.VideoCapture(0)
 
 while True:
-    _, frame = cap.read()
-    labels = []
-    gray = cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
-    faces = face_classifier.detectMultiScale(gray)
+    #Find Hear Cascade to draw box around face:
+    ret, frame = cap.read()
+    frame =  cv2.resize(frame, (1280,720))
+    if not ret:
+        break
+    face_detector = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 
-    for (x,y,w,h) in faces:
-        cv2.rectangle(frame,(x,y),(x+w,y+h),(0,255,255),2)
-        roi_gray = gray[y:y+h,x:x+w]
-        roi_gray = cv2.resize(roi_gray,(48,48),interpolation=cv2.INTER_AREA)
+    #Converting the Captured frame to gray scale:
+    gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-        if np.sum([roi_gray])!=0:
-            roi = roi_gray.astype('float')/255.0
-            roi = img_to_array(roi)
-            roi = np.expand_dims(roi,axis=0)
+    # Detect faces available on camera:
+    num_face = face_detector.detectMultiScale(gray_frame, scaleFactor = 1.3, minNeighbors = 5)
 
-            prediction = classifier.predict(roi)[0]
-            label=emotion_labels[prediction.argmax()]
+    # Take each fave available on the camera and preprocess it:
+    for (x, y, w, h) in num_face:
+        cv2.rectangle(frame, (x,y-50), (x+w, y+h+10), (0,255,0), 4)
+        roi_gray_frame = gray_frame[y:y+h, x: x+w]
+        cropped_img = np.expand_dims(cv2.resize(roi_gray_frame, (48,48), -1), 0)
+
+        #Predict the emotion:
+        if np.sum([roi_gray_frame])!=0:
+            emotion_prediction = model.predict(cropped_img)
+            maxindex = int(np.argmax(emotion_prediction))
             label_position = (x,y)
-            cv2.putText(frame,label,label_position,cv2.FONT_HERSHEY_SIMPLEX,1,(0,255,0),2)
+            cv2.putText(frame,emotion_classes[maxindex],label_position,cv2.FONT_HERSHEY_SIMPLEX,1,(0,255,0),2)
         else:
             cv2.putText(frame,'No Faces',(30,80),cv2.FONT_HERSHEY_SIMPLEX,1,(0,255,0),2)
-    cv2.imshow('Emotion Detector',frame)
+    
+    cv2.imshow('Emotion Detection', frame)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 

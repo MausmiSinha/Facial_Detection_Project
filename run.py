@@ -12,13 +12,14 @@ emotion_classes = {
     6: "Surprise"}
 
 #Loading Trained Model:
-json_file = open("model\model.json", 'r')
+json_file = open("model\model_v2.json", 'r')
+
 loaded_model_json = json_file.read()
 json_file.close()
 model = model_from_json(loaded_model_json)
 
 #Loading Weights:
-model.load_weights("model\model.h5")
+model.load_weights("model\model_v2.h5")
 
 print("Model Loaded Successfully")
 

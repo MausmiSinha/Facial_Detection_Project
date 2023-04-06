@@ -8,6 +8,29 @@ from streamlit_webrtc import VideoProcessorBase, webrtc_streamer, VideoTransform
 # Setting Page Title:
 st.set_page_config(page_title="Emotion Detector", initial_sidebar_state = 'auto')
 
+css_example = '''                                           
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">    
+    
+    <style>
+        .bodyP1{
+            font-size: 20px;
+        }
+        .footer{
+            display: flex;
+            justify-content:center;
+            align-items: center;
+            font-size: 20px;
+            font-weight: 300;
+            margin-top: 50px;
+        }
+        .aboutUs p{
+            font-size: 18px;
+            text-align: justify;
+        }
+    </style>
+'''
+st.write(css_example, unsafe_allow_html=True)
+
 # Declaring Classes
 emotion_classes = {
     0: "Angry", 
@@ -70,53 +93,55 @@ class EmotionDetector(VideoTransformerBase):
 
 def main():
     # Face Analysis Application #
-    st.title("Emotion Detector")
-    activiteis = ["Home", "About"]
-    choice = st.sidebar.selectbox("Select Activity", activiteis)
-    st.sidebar.markdown(
-        """ Developed by Aman and Mausmi    
-            Email : bhogalamansingh22@gmail.com and sinhatanu2001@gmail.com
-            [LinkedIn] (https://www.linkedin.com/in/aman-singh-bhogal-002914195/)
-            [LinkedIn] (https://www.linkedin.com/in/mausmi-sinha-5a3345220/)
-            """)
+    activiteis = ["Home", "About Us"]
+    choice = st.sidebar.selectbox("Select Activity", activiteis)    
+    html_sidebar =  """
+        <div align="center" style="text-align:center">
+            <h2>Developed By: Aman & Mausmi</h2>
+            <strong>Email:</strong> <a target="_blank" href="mailto:bhogalamansingh22@gmail.com"> bhogalamansingh22@gmail.com</a> & <a target="_blank" href="mailto:sinhatanu2001@gmail.com">sinhatanu2001@gmail.com</a>
+            <br>
+            <a target="_blank" href="https://github.com/MausmiSinha/Facial_Detection_Project" style="font-size:36px"> <i class="fa-brands fa-github"></i> </a>
+        </div> 
+    """
+    st.sidebar.markdown(html_sidebar, unsafe_allow_html=True)
+
+    # Menu Cases:
     if choice == "Home":
-        html_temp_home1 = """<div style="background-color:#6D7B8D;padding:10px">
-                                            <h4 style="color:white;text-align:center;">
-                                            Emotion detector using OpenCV, Custom CNN model and Streamlit.</h4>
-                                            <p>This project aims to build a Facial Emotion Recognition system using the OpenCV library and Convolutional Neural Network (CNN) algorithms. The system will be trained on a dataset of images of faces with annotations of emotions to predict the emotions of new unseen images.</p>
-                                            </div>
-                                            </br>
+        st.title("Emotion Detector")
+        html_temp_home1 = """
                             <div>
+                                <p class="bodyP1">Welcome to our emotion recognition web application! Our advanced technology combines OpenCV and Convolutional Neural Networks to accurately identify emotions in real-time. </p>
+                                <p class="bodyP1">Our application is user-friendly and easy to use. Simply use your computer's camera to capture a live video feed, and our advanced algorithms will quickly analyze the facial expressions to detect the emotion displayed. Our application can recognize a wide range of emotions, including happiness, sadness, anger, surprise, fear, and disgust.</p>
                                 <h2>Try Now</h2>
                                 <p>Click on start to use webcam and detect your face emotion</p>
                             </div>
                             """
         st.markdown(html_temp_home1, unsafe_allow_html=True)
         webrtc_streamer(key="example", video_transformer_factory=EmotionDetector)
-        st.write("""
-                 The application has two functionalities.
-                 1. Real time face detection using web cam feed.
-                 2. Real time face emotion recognization.
-                 """)
-    elif choice == "About":
-        st.subheader("About us")
-        html_temp_about1= """<div style="background-color:#6D7B8D;padding:10px">
-                                    <h4 style="color:white;text-align:center;">
-                                    Real time face emotion detection application using OpenCV, Custom Trained CNN model and Streamlit.</h4>
-                                    </div>
-                                    </br>"""
+        html_home2  = """
+            <div class="footer">
+                <p>&copy; 2023 by Aman Singh Bhogal & Mausmi Sinha. All rights reserved.</p>
+            </div>
+        """
+        st.write(html_home2, unsafe_allow_html=True)
+    elif choice == "About Us":
+        st.title("About Us:")
+        html_temp_about1= """
+                            <div class="aboutUs">
+                                <p>
+                                    This Emotion Detection Web Application is created by Aman Singh Bhogal and Mausmi Sinha as their Machine Learning Subject's Project. The application uses OpenCV and Convolutional Neural Network model to accurately detect emotions in real-time.
+                                </p>
+                                <p>
+                                    Together, Aman and Mausmi worked on this project to create an easy-to-use web application that can accurately detect a wide range of emotions. They hope that this application can be useful for researchers, educators, and anyone interested in exploring the field of emotion detection.
+                                </p>
+                                <p>
+                                    If you have any questions or feedback about this project, please feel free to contact us at <a target="_blank" href="mailto:bhogalamansingh22@gmail.com"> bhogalamansingh22@gmail.com</a> or <a target="_blank" href="mailto:sinhatanu2001@gmail.com">sinhatanu2001@gmail.com</a>
+                                </p>
+                            </div>
+                                    """
         st.markdown(html_temp_about1, unsafe_allow_html=True)
-
-        html_temp4 = """
-                             		<div style="background-color:#98AFC7;padding:10px">
-                             		<h4 style="color:white;text-align:center;">This Application is developed by Mohammad Juned Khan using Streamlit Framework, Opencv, Tensorflow and Keras library for demonstration purpose. If you're on LinkedIn and want to connect, just click on the link in sidebar and shoot me a request. If you have any suggestion or wnat to comment just write a mail at Mohammad.juned.z.khan@gmail.com. </h4>
-                             		<h4 style="color:white;text-align:center;">Thanks for Visiting</h4>
-                             		</div>
-                             		<br></br>
-                             		<br></br>"""
-
-        st.markdown(html_temp4, unsafe_allow_html=True)
-
+        st.title("Authors:")
+        st.image(['images/Aman Singh Bhogal.jpg','images/mausmi.jpg'], caption=["Aman Singh Bhogal", "Mausmi Sinha"], width=300)
     else:
         pass
 

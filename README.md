@@ -52,7 +52,22 @@ pip install -r requirements.txt
 The dataset used for training the model can be found in the `images` folder. It contains images of faces with annotations of emotions.
 
 ## Screenshots:
-
+<div align="center">
+  <img src="images/Screenshots/SS1.png" height="600"  alt="S1">
+  <img src="images/Screenshots/SS2.png" height="600"  alt="S2">
+  <img src="images/Screenshots/SS3.png" height="600"  alt="S3">
+  <img src="images/Screenshots/SS4.png" height="600"  alt="S4">
+  <img src="images/Screenshots/SS5.png" height="600"  alt="S5">
+  <img src="images/Screenshots/SS6.png" height="600"  alt="S6">
+  <img src="images/Screenshots/SS7.png" height="600"  alt="S7">
+  <img src="images/Screenshots/SS8.png" height="600"  alt="S8">
+  <img src="images/Screenshots/SS9.png" height="600"  alt="S9">
+  <img src="images/Screenshots/SS10.png" height="600"  alt="S10">
+  <img src="images/Screenshots/SS11.png" height="600"  alt="S11">
+  <img src="images/Screenshots/SS12.png" height="600"  alt="S12">
+  <img src="images/Screenshots/SS13.png" height="600"  alt="S13">
+  <img src="images/Screenshots/SS14.png" height="600"  alt="S14">
+</div>
 
 ## Contributing
 

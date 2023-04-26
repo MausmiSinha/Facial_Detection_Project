@@ -6,7 +6,7 @@ import streamlit as st
 from streamlit_webrtc import VideoProcessorBase, webrtc_streamer, VideoTransformerBase
 
 # Setting Page Title:
-st.set_page_config(page_title="Emotion Detector", initial_sidebar_state = 'auto')
+st.set_page_config(page_title="Smile", initial_sidebar_state = 'auto')
 
 css_example = '''                                           
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">    
@@ -107,10 +107,10 @@ def main():
 
     # Menu Cases:
     if choice == "Home":
-        st.title("Emotion Detector")
+        st.title("Smile")
         html_temp_home1 = """
                             <div>
-                                <p class="bodyP1">Welcome to our emotion recognition web application! Our advanced technology combines OpenCV and Convolutional Neural Networks to accurately identify emotions in real-time. </p>
+                                <p class="bodyP1">Welcome to Smile. This is an emotion recognition web application! Our advanced technology combines OpenCV and Convolutional Neural Networks to accurately identify emotions in real-time. </p>
                                 <p class="bodyP1">Our application is user-friendly and easy to use. Simply use your computer's camera to capture a live video feed, and our advanced algorithms will quickly analyze the facial expressions to detect the emotion displayed. Our application can recognize a wide range of emotions, including happiness, sadness, anger, surprise, fear, and disgust.</p>
                                 <h2>Try Now</h2>
                                 <p>Click on start to use webcam and detect your face emotion</p>

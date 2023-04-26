@@ -4,9 +4,11 @@ import numpy as np
 from keras.models import model_from_json
 import streamlit as st
 from streamlit_webrtc import VideoProcessorBase, webrtc_streamer, VideoTransformerBase
+from PIL import Image
 
+logo = Image.open('images/logo.png')
 # Setting Page Title:
-st.set_page_config(page_title="Smile", initial_sidebar_state = 'auto')
+st.set_page_config(page_title="Smile",page_icon=logo , initial_sidebar_state = 'auto')
 
 css_example = '''                                           
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">    
@@ -26,6 +28,12 @@ css_example = '''
         .aboutUs p{
             font-size: 18px;
             text-align: justify;
+        }
+        .header{
+            display: flex;
+            flex-direction:column;
+            justify-content: center;
+            align-items: center;
         }
     </style>
 '''
@@ -107,7 +115,22 @@ def main():
 
     # Menu Cases:
     if choice == "Home":
-        st.title("Smile")
+        col1, col2, col3 = st.columns(3)
+
+        with col1:
+            st.write('')
+
+        with col2:
+            st.image(logo, width=200)
+
+        with col3:
+            st.write('')
+        header = """
+                    <div class = "header">
+                        <h1>Smile</h1>
+                    </div>
+                """
+        st.markdown(header,unsafe_allow_html=True)
         html_temp_home1 = """
                             <div>
                                 <p class="bodyP1">Welcome to Smile. This is an emotion recognition web application! Our advanced technology combines OpenCV and Convolutional Neural Networks to accurately identify emotions in real-time. </p>
@@ -129,7 +152,7 @@ def main():
         html_temp_about1= """
                             <div class="aboutUs">
                                 <p>
-                                    This Emotion Detection Web Application is created by Aman Singh Bhogal and Mausmi Sinha as their Machine Learning Subject's Project. The application uses OpenCV and Convolutional Neural Network model to accurately detect emotions in real-time.
+                                    Smile is an Web Application created by Aman Singh Bhogal and Mausmi Sinha as their Machine Learning Subject's Project. The application uses OpenCV and Convolutional Neural Network model to accurately detect emotions in real-time.
                                 </p>
                                 <p>
                                     Together, Aman and Mausmi worked on this project to create an easy-to-use web application that can accurately detect a wide range of emotions. They hope that this application can be useful for researchers, educators, and anyone interested in exploring the field of emotion detection.
@@ -141,7 +164,7 @@ def main():
                                     """
         st.markdown(html_temp_about1, unsafe_allow_html=True)
         st.title("Authors:")
-        st.image(['images/Aman Singh Bhogal.jpg','images/mausmi.jpg'], caption=["Aman Singh Bhogal", "Mausmi Sinha"], width=300)
+        st.image(['images/Aman Singh Bhogal.jpg','images/mausmi.jpg'], caption=["Aman Singh Bhogal", "Mausmi Sinha"], width=350)
     else:
         pass
 
